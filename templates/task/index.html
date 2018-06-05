@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block body %}
+<h1>{{ project.title }}</h1>
+<form action="{{ url_for('add_task', project_id=project.id) }}" method="POST" class="mb-3">
+   <div class="formgroup row">
+      <div class="col-7">
+         <input type="text" name="description" class="form-control">
+      </div>
+      <div class="col-auto">
+         <button class="btn btn-primary" type="submit">Create</button>
+         <a class="btn btn-secondary" href="{{ url_for('project_index', project_id=project.id) }}">Cancel</a>
+      </div>
+   </div>
+</form>
+<div class="row">
+   <div class="col-6">Description</div>
+</div>
+{% for task in project.tasks %}
+<div class="row align-items-center mb-2">
+   <div class="col-6">{{ task.description }}</div>
+   <div class="col-auto">
+      <a class="btn btn-warning btn-sm" href="{{ url_for('edit_task', project_id=task.project.id, task_id=task.id) }}">Edit</a>
+      <a class="btn btn-danger btn-sm" href="{{ url_for('remove_task', project_id=task.project.id, task_id=task.id) }}">Delete</a>
+   </div>
+</div>
+{% endfor %} {% endblock body %}
